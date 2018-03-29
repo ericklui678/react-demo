@@ -7,7 +7,6 @@ export default ({player}) => {
   let regionStr;
   regions.length > 1 ? regionStr = regions.join(',') : regionStr = regions[0];
 
-
   return (
     <tr>
       <td>{id}</td>
