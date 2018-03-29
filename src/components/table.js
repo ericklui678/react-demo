@@ -1,8 +1,7 @@
 import React from 'react';
-import Player from './player';
-import players from '../players.json';
+import { Player } from './player';
 
-export default () => {
+export const Table = ({players}) => {
   const playerRow = players.map(player => {
     return <Player
       key={player.id}

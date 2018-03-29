@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({player}) => {
+export const Player = ({player}) => {
   const {id, name, regions} = player;
 
   // regionStr is combined string if player is from multiple regions
