@@ -3,9 +3,7 @@ import Player from './player';
 import players from '../players.json';
 
 export default () => {
-  console.log(players);
-  let first = players.slice(0, 5);
-  const playerRow = first.map(player => {
+  const playerRow = players.map(player => {
     return <Player
       key={player.id}
       player={player}
