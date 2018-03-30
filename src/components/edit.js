@@ -23,7 +23,7 @@ class Edit extends Component {
     regions.length > 1 ? regionStr = regions.join(',') : regionStr = regions[0];
 
     this.setState({
-      name: player.name,
+      name: name,
       region: regionStr,
       playerIdx: this.props.players.indexOf(player)
     })
@@ -33,14 +33,22 @@ class Edit extends Component {
     this.setState({ name });
   }
 
+  onRegionChange(region) {
+    this.setState({ region });
+  }
+
+  onFormSubmit(e) {
+    e.preventDefault();
+    this.props.editPlayer(this.state);
+    this.props.history.push('/');
+  }
+
   render() {
     console.log(this.state);
     return (
       <div>
         <h1>Edit Player</h1>
-        {/* <h3>{this.state.name}</h3>
-        <h3>{this.state.region}</h3> */}
-        <form>
+        <form onSubmit={e => this.onFormSubmit(e)}>
           <div className='form-group'>
             <label htmlFor='playerName'>Player Name</label>
             <input
@@ -71,4 +79,4 @@ function mapStateToProps(state) {
   return { players: state.players };
 }
 
-export default connect(mapStateToProps)(Edit);
+export default connect(mapStateToProps, { editPlayer })(Edit);
