@@ -13,9 +13,9 @@ Normally you would be querying for data but we have provided a json file (player
 ### Part 1: Create a paginated grid in table format that can render all players with the following headers (see example)
 
   a. pagination should allow you to set records per page
-  
+
   b. should have next and previous buttons
-  
+
   c. should show you which page number you are on at any given time
 
 
@@ -32,5 +32,7 @@ Normally you would be querying for data but we have provided a json file (player
 ### Final steps before you submit:
 Please list build and run steps here:
 
+1) Go into project root directory
+2) Run 'npm run start-dev' in terminal
 
 _P.S: Feel free to add any other bonus functionality you can think of_
