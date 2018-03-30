@@ -109,7 +109,7 @@ class App extends Component {
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
 
-    const filteredTable = this.getFilteredTable(this.props.players[0]);
+    const filteredTable = this.getFilteredTable(this.props.players);
     const displayedTable = filteredTable.slice(start, end);
 
     return (
