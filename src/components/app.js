@@ -83,7 +83,7 @@ export default class App extends Component {
   render() {
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
-    const displayedTable = players.slice(start, end)
+    const displayedTable = players
       .filter(player => {
         return player.name.toLowerCase().includes(this.state.filterName);
       })
@@ -93,6 +93,8 @@ export default class App extends Component {
         }
         return false;
       })
+      .slice(start, end);
+
 
     return (
       <div>
