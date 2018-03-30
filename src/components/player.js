@@ -12,6 +12,10 @@ export const Player = ({player}) => {
       <td>{id}</td>
       <td>{name}</td>
       <td>{regionStr}</td>
+      <td>
+        <a className='mr-2' href='#'>Edit</a>
+        <a href='#'>Delete</a>
+      </td>
     </tr>
   )
 }
