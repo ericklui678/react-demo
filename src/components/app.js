@@ -24,7 +24,7 @@ class App extends Component {
   getFilteredTable(players) {
     return players
       .filter(player => {
-        return player.name.toLowerCase().includes(this.state.filterName);
+        return player.name.toLowerCase().startsWith(this.state.filterName);
       })
       .filter(player => {
         for (let region of player.regions) {

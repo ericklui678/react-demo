@@ -14,8 +14,6 @@ export default class Table extends Component {
       })
     }
 
-    console.log(players);
-
     return (
       <div>
         <table className='table table-bordered'>

@@ -17,7 +17,6 @@ export function deletePlayer(idx, callback) {
 }
 
 export function createPlayer(data, callback) {
-  console.log('inside action', data, callback);
   return {
     type: CREATE_PLAYER,
     payload: { data: data, callback: callback }

@@ -44,7 +44,6 @@ class Edit extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <h1>Edit Player</h1>

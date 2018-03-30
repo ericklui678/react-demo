@@ -31,7 +31,6 @@ class Delete extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <h1>Are you sure you want to delete {this.state.name}? </h1>
