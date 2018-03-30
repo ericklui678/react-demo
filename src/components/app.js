@@ -6,6 +6,7 @@ import { fetchPlayers } from '../actions';
 
 class App extends Component {
   componentDidMount() {
+    console.log('App component did mount');
     this.props.fetchPlayers(); // action to fetch players from players.json
   }
 
