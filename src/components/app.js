@@ -94,6 +94,8 @@ export default class App extends Component {
         return false;
       })
 
+    console.log('filtered', filteredTable);
+
     const displayedTable = filteredTable.slice(start, end);
 
     console.log(start, end, displayedTable, this.state);
@@ -103,6 +105,7 @@ export default class App extends Component {
         <h1>Player Data</h1>
         <Pagination
           activePage={this.state.activePage}
+          itemsCountPerPage={this.state.recordsPerPage}
           totalItemsCount={filteredTable.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
