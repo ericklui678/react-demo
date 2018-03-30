@@ -9,16 +9,13 @@ export const Player = ({ player }) => {
   regions.length > 1 ? regionStr = regions.join(',') : regionStr = regions[0];
 
   return (
-
-
     <tr>
       <td>{id}</td>
       <td>{name}</td>
       <td>{regionStr}</td>
       <td>
-        <Link to={`/edit/${id}`}>Edit</Link>
-        {/* <a className='mr-2' href=''>Edit</a> */}
-        {/* <Link to={`/edit/${id}`}>Edit</Link> <a href=''>Delete</a> */}
+        <Link to={`/edit/${id}`}>Edit</Link>{' '}
+        <Link to={`/delete/${id}`}>Delete</Link>
       </td>
     </tr>
   )
