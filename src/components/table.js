@@ -18,7 +18,7 @@ export const Table = ({players}) => {
       <table className='table table-bordered'>
         <thead>
           <tr>
-            <th colspan='4'>
+            <th colSpan='4'>
               <button type='button' className='btn btn-primary mr-3'>+</button>
               Add a player
             </th>
