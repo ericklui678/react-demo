@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import reducers from './reducers';
 
 import App from './components/app';
+import Create from './components/create';
 import Edit from './components/edit';
 import Delete from './components/delete';
 
@@ -17,6 +18,7 @@ ReactDOM.render(
       <Switch>
         <Route path='/delete/:id' component={Delete}/>
         <Route path='/edit/:id' component={Edit}/>
+        <Route path='/create' component={Create}/>
         <Route path='/' component={App}/>
       </Switch>
     </BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Player } from './player';
+import { Link } from 'react-router-dom';
 
 export default class Table extends Component {
   render() {
@@ -7,12 +8,13 @@ export default class Table extends Component {
 
     let playerRow;
 
-    // if there is at least 1 entry in the players array
     if (players.length) {
       playerRow = players.map(player => {
         return <Player key={player.id} player={player}/>
       })
     }
+
+    console.log(players);
 
     return (
       <div>
@@ -20,8 +22,7 @@ export default class Table extends Component {
           <thead>
             <tr>
               <th colSpan='4'>
-                <button type='button' className='btn btn-primary mr-3'>+</button>
-                Add a player
+                <Link to='/create' className='btn btn-primary mr-3'>+</Link>Add a player
               </th>
             </tr>
             <tr>

@@ -1,5 +1,5 @@
 import players from '../players.json';
-import { EDIT_PLAYER, DELETE_PLAYER } from '../actions/';
+import { EDIT_PLAYER, DELETE_PLAYER, CREATE_PLAYER } from '../actions/';
 
 export default function (state = players, action) {
   switch (action.type) {
@@ -16,6 +16,11 @@ export default function (state = players, action) {
       updatedState.splice(idx, 1);
       action.payload.callback();
       return updatedState;
+    case CREATE_PLAYER:
+      let updateState = state.slice();
+      updateState.push(action.payload.data)
+      action.payload.callback();
+      return updateState;
     default:
       return state;
   }

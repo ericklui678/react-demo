@@ -1,53 +1,55 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editPlayer } from '../actions/';
 import { Link } from 'react-router-dom';
+import { createPlayer } from '../actions/';
 
-class Edit extends Component {
+class Create extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      region: '',
-      playerIdx: ''
+      regions: '',
+      id: this.generateRandomId()
     }
   }
-  componentDidMount() {
-    const player = this.props.players.filter(player => {
-      return player.id === this.props.match.params.id;
-    })[0];
 
-    const { name, regions } = player;
-
-    let regionStr;
-    regions.length > 1 ? regionStr = regions.join(',') : regionStr = regions[0];
-
-    this.setState({
-      name: name,
-      region: regionStr,
-      playerIdx: this.props.players.indexOf(player)
+  generateRandomId() {
+    let id = '';
+    let possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let allPlayerIDS = this.props.players.map(player => {
+      return player.id;
     })
+
+    // keep generating IDs until unique from players array
+    do {
+      for (let i = 0; i < 24; i++) {
+        id += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+    } while (allPlayerIDS.indexOf(id) !== -1);
+    return id;
   }
 
   onNameChange(name) {
     this.setState({ name });
   }
 
-  onRegionChange(region) {
-    this.setState({ region });
+  onRegionChange(regions) {
+    this.setState({ regions: [regions] });
   }
 
   onFormSubmit(e) {
     e.preventDefault();
-    this.props.editPlayer(this.state);
-    this.props.history.push('/');
+
+    this.props.createPlayer(this.state, () => {
+      this.props.history.push('/');
+    });
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
-        <h1>Edit Player</h1>
+        <h1>Create Player</h1>
         <form onSubmit={e => this.onFormSubmit(e)}>
           <div className='form-group'>
             <label htmlFor='playerName'>Gamer Handle</label>
@@ -64,7 +66,7 @@ class Edit extends Component {
               onChange={e => this.onRegionChange(e.target.value)}
               className="form-control"
               id='playerRegion'
-              value={this.state.region}
+              value={this.state.regions}
             />
           </div>
           <button type='submit' className='btn btn-primary'>Submit</button>
@@ -79,4 +81,4 @@ function mapStateToProps(state) {
   return { players: state.players };
 }
 
-export default connect(mapStateToProps, { editPlayer })(Edit);
+export default connect(mapStateToProps, { createPlayer })(Create);
