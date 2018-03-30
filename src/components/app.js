@@ -83,7 +83,7 @@ export default class App extends Component {
   render() {
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
-    const displayedTable = players
+    const filteredTable = players
       .filter(player => {
         return player.name.toLowerCase().includes(this.state.filterName);
       })
@@ -93,15 +93,17 @@ export default class App extends Component {
         }
         return false;
       })
-      .slice(start, end);
 
+    const displayedTable = filteredTable.slice(start, end);
+
+    console.log(start, end, displayedTable, this.state);
 
     return (
       <div>
         <h1>Player Data</h1>
         <Pagination
           activePage={this.state.activePage}
-          totalItemsCount={displayedTable.length}
+          totalItemsCount={filteredTable.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
