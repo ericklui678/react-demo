@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import Table from './table';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
-import { fetchPlayers } from '../actions';
 
 class App extends Component {
-  componentDidMount() {
-    console.log('App component did mount');
-    this.props.fetchPlayers(); // action to fetch players from players.json
-  }
 
   constructor(props) {
     super(props);
@@ -114,7 +109,7 @@ class App extends Component {
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
 
-    const filteredTable = this.getFilteredTable(this.props.players);
+    const filteredTable = this.getFilteredTable(this.props.players[0]);
     const displayedTable = filteredTable.slice(start, end);
 
     return (
@@ -140,4 +135,4 @@ function mapStateToProps(state) {
   return { players: state.players };
 }
 
-export default connect(mapStateToProps, { fetchPlayers })(App);
+export default connect(mapStateToProps)(App);

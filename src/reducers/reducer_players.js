@@ -1,9 +1,7 @@
-import { FETCH_PLAYERS } from '../actions';
+import players from '../players.json';
 
-export default function (state = [], action) {
+export default function (state = [players], action) {
   switch (action.type) {
-    case FETCH_PLAYERS:
-      return action.payload;
     default:
       return state;
   }

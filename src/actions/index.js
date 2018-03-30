@@ -1,10 +1,8 @@
-import players from '../players.json';
+export const EDIT_PLAYER = 'edit_player';
 
-export const FETCH_PLAYERS = 'fetch_players';
-
-export function fetchPlayers() {
+export function editPlayer(id) {
   return {
-    type: FETCH_PLAYERS,
-    payload: players
-  };
+    type: EDIT_PLAYER,
+    payload: id
+  }
 }

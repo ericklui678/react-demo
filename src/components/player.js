@@ -9,6 +9,8 @@ export const Player = ({ player }) => {
   regions.length > 1 ? regionStr = regions.join(',') : regionStr = regions[0];
 
   return (
+
+
     <tr>
       <td>{id}</td>
       <td>{name}</td>
