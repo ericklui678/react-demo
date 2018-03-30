@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Table } from './table';
+import Table from './table';
 import Pagination from 'react-js-pagination';
-import players from '../players.json';
+import { connect } from 'react-redux';
+import { fetchPlayers } from '../actions';
 
-export default class App extends Component {
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchPlayers(); // action to fetch players from players.json
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +16,7 @@ export default class App extends Component {
       recordsPerPage: 10,
       filterName: '',
       filterRegion: ''
-    };
+    }
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
@@ -19,22 +24,21 @@ export default class App extends Component {
     this.setState({ activePage: pageNumber });
   }
 
-  onInputChange(recordsPerPage) {
-    if (recordsPerPage > 0) {
-      this.setState({ recordsPerPage: Number(recordsPerPage) })
-    } else {
-      this.setState({ recordsPerPage: '' })
-    }
+  // filters table by name and/or region
+  getFilteredTable(players) {
+    return players
+      .filter(player => {
+        return player.name.toLowerCase().includes(this.state.filterName);
+      })
+      .filter(player => {
+        for (let region of player.regions) {
+          if (region.includes(this.state.filterRegion)) return true;
+        }
+      return false;
+    });
   }
 
-  onNameChange(filterName) {
-    this.setState({ filterName: filterName.toLowerCase() });
-  }
-
-  onRegionChange(filterRegion) {
-    this.setState({ filterRegion: filterRegion.toLowerCase() });
-  }
-
+  // renders the records per page input field
   renderRecordsField() {
     return (
       <div className='input-group  mb-2'>
@@ -45,11 +49,21 @@ export default class App extends Component {
           type='text'
           className='form-control col-2'
           value={this.state.recordsPerPage}
-          onChange={e => this.onInputChange(e.target.value)}/>
+          onChange={e => this.onRecordChange(e.target.value)}/>
       </div>
     );
   }
 
+  // updates recordsPerPage local state
+  onRecordChange(recordsPerPage) {
+    if (recordsPerPage > 0) {
+      this.setState({ recordsPerPage: Number(recordsPerPage) })
+    } else {
+      this.setState({ recordsPerPage: '' })
+    }
+  }
+
+  // renders the name filter input field
   renderNameFilter() {
     return (
       <div className='input-group  mb-2'>
@@ -65,6 +79,12 @@ export default class App extends Component {
     );
   }
 
+  // updates filterName local state
+  onNameChange(filterName) {
+    this.setState({ filterName: filterName.toLowerCase() });
+  }
+
+  // renders the region filter input field
   renderRegionFilter() {
     return (
       <div className='input-group  mb-2'>
@@ -80,26 +100,25 @@ export default class App extends Component {
     );
   }
 
+  // updates the filterRegion local state
+  onRegionChange(filterRegion) {
+    this.setState({ filterRegion: filterRegion.toLowerCase() });
+  }
+
   render() {
+    // start is the starting index for the displayed table
+    // end is the ending index for the displayed table
+    // filteredTable used to for its length to get proper number of pages
+    // displayedTable is the table shown on screen
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
-    const filteredTable = players
-      .filter(player => {
-        return player.name.toLowerCase().includes(this.state.filterName);
-      })
-      .filter(player => {
-        for (let region of player.regions) {
-          if (region.includes(this.state.filterRegion)) return true;
-        }
-        return false;
-      })
 
+    const filteredTable = this.getFilteredTable(this.props.players);
     const displayedTable = filteredTable.slice(start, end);
-
 
     return (
       <div>
-        <h1>Player Data</h1>
+        <h1>Players Index</h1>
         <Pagination
           activePage={this.state.activePage}
           itemsCountPerPage={this.state.recordsPerPage}
@@ -107,14 +126,17 @@ export default class App extends Component {
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
-        {/* Redunduncy for the input fields, redux-form can be useful here */}
-        <div>
-          {this.renderRecordsField()}
-          {this.renderNameFilter()}
-          {this.renderRegionFilter()}
-        </div>
-        <Table players={displayedTable}/>
+        {this.renderRecordsField()}
+        {this.renderNameFilter()}
+        {this.renderRegionFilter()}
+        <Table players={displayedTable} />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { players: state.players };
+}
+
+export default connect(mapStateToProps, { fetchPlayers })(App);

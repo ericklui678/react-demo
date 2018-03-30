@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-export const Player = ({player}) => {
+export const Player = ({ player }) => {
   const {id, name, regions} = player;
 
   // regionStr is combined string if player is from multiple regions
@@ -15,7 +14,7 @@ export const Player = ({player}) => {
       <td>{regionStr}</td>
       <td>
         {/* <a className='mr-2' href=''>Edit</a> */}
-        <Link to={`/edit/${id}`}>Edit</Link> <a href=''>Delete</a>
+        {/* <Link to={`/edit/${id}`}>Edit</Link> <a href=''>Delete</a> */}
       </td>
     </tr>
   )
