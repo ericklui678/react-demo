@@ -101,7 +101,7 @@ export default class App extends Component {
         <h1>Player Data</h1>
         <Pagination
           activePage={this.state.activePage}
-          totalItemsCount={450}
+          totalItemsCount={players.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
