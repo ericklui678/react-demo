@@ -33,6 +33,7 @@ Normally you would be querying for data but we have provided a json file (player
 Please list build and run steps here:
 
 1) Go into project root directory
-2) Run 'npm run start-dev' in terminal
+2) Run 'npm install' to install package.json dependencies
+2) Run 'npm run start-dev' in terminal to start the app
 
 _P.S: Feel free to add any other bonus functionality you can think of_
