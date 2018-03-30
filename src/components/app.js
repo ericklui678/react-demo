@@ -94,11 +94,8 @@ export default class App extends Component {
         return false;
       })
 
-    console.log('filtered', filteredTable);
-
     const displayedTable = filteredTable.slice(start, end);
 
-    console.log(start, end, displayedTable, this.state);
 
     return (
       <div>
