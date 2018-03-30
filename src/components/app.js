@@ -9,13 +9,14 @@ export default class App extends Component {
     this.state = {
       activePage: 1,
       recordsPerPage: 10,
+      filterName: '',
+      filterRegion: ''
     };
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-    console.log(`active page is ${pageNumber}`);
   }
 
   onInputChange(recordsPerPage) {
@@ -24,10 +25,17 @@ export default class App extends Component {
     } else {
       this.setState({ recordsPerPage: '' })
     }
-    console.log(`per page is now ${recordsPerPage}`);
   }
 
-  renderInputField() {
+  onNameChange(filterName) {
+    this.setState({ filterName: filterName.toLowerCase() });
+  }
+
+  onRegionChange(filterRegion) {
+    this.setState({ filterRegion: filterRegion.toLowerCase() });
+  }
+
+  renderRecordsField() {
     return (
       <div className='input-group  mb-2'>
         <div className='input-group-prepend'>
@@ -39,14 +47,52 @@ export default class App extends Component {
           value={this.state.recordsPerPage}
           onChange={e => this.onInputChange(e.target.value)}/>
       </div>
-    )
+    );
+  }
+
+  renderNameFilter() {
+    return (
+      <div className='input-group  mb-2'>
+        <div className='input-group-prepend'>
+          <span className='input-group-text'>Name</span>
+        </div>
+        <input
+          type='text'
+          className='form-control col-3'
+          value={this.state.filterName}
+          onChange={e => this.onNameChange(e.target.value)}/>
+      </div>
+    );
+  }
+
+  renderRegionFilter() {
+    return (
+      <div className='input-group  mb-2'>
+        <div className='input-group-prepend'>
+          <span className='input-group-text'>Region</span>
+        </div>
+        <input
+          type='text'
+          className='form-control col-3'
+          value={this.state.filterRegion}
+          onChange={e => this.onRegionChange(e.target.value)}/>
+      </div>
+    );
   }
 
   render() {
     const start = (this.state.activePage - 1) * this.state.recordsPerPage;
     const end = start + this.state.recordsPerPage;
-
-    console.log(start,end);
+    const displayedTable = players.slice(start, end)
+      .filter(player => {
+        return player.name.toLowerCase().includes(this.state.filterName);
+      })
+      .filter(player => {
+        for (let region of player.regions) {
+          if (region.includes(this.state.filterRegion)) return true;
+        }
+        return false;
+      })
 
     return (
       <div>
@@ -57,9 +103,13 @@ export default class App extends Component {
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
-        <h5>Current Page: {this.state.activePage}</h5>
-        {this.renderInputField()}
-        <Table players={players.slice(start, end)}/>
+        {/* Redunduncy for the input fields, redux-form can be useful here */}
+        <div>
+          {this.renderRecordsField()}
+          {this.renderNameFilter()}
+          {this.renderRegionFilter()}
+        </div>
+        <Table players={displayedTable}/>
       </div>
     );
   }
